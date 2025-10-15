@@ -25,7 +25,13 @@ class Executor(val variables: Map<String, Double> = mapOf(), val logOperations: 
     }
 
     fun OperatorNode.getValue(): Double {
-        return executeOperation(operator, left?.getValue() ?: 0.0, right?.getValue() ?: 0.0)
+        val leftValue = left?.getValue()
+        if ((leftValue == null) && (operator.opType != OpType.MINUS) && (operator.opType != OpType.PLUS)) {
+            throw IllegalArgumentException("Illegal operator ${operator.opType.value} at position ${operator.position}")
+        }
+        val rightValue = right?.getValue()
+            ?: throw IllegalArgumentException("Illegal operator ${operator.opType.value} at position ${operator.position}")
+        return executeOperation(operator, leftValue ?: 0.0, rightValue)
     }
 
     private fun executeOperation(operator: Token.Operator, left: Double, right: Double): Double {

@@ -1,6 +1,6 @@
 package org.example.calculator
 
-class Lexer {
+class Lexer(val log: Boolean = false) {
     private val tokens = mutableListOf<Token>()
 
     private var state = State.SPACE
@@ -20,6 +20,7 @@ class Lexer {
                 State.NUMBER -> number(index, char)
             }
         }
+        if (log) printTokens(tokens)
         return tokens
     }
 

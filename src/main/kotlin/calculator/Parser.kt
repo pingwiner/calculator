@@ -2,7 +2,7 @@ package org.example.calculator
 
 import org.example.calculator.Node.*
 
-class Parser() {
+class Parser(val logAST: Boolean = false) {
     val stack = mutableListOf<ContainerNode>()
 
     fun parse(tokens: List<Token>): Node {
@@ -32,7 +32,7 @@ class Parser() {
         }
         if (stack.size > 1) throw IllegalArgumentException("Unbalanced parentheses in expression")
         val nodes = squash(removeUnary(stack.last().nodes))
-        //printNodes(nodes)
+        if (logAST) printNodes(nodes)
         return nodes.last()
     }
 

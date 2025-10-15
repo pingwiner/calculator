@@ -27,7 +27,7 @@ fun printNode(node: Node, indent: String = "") {
             }
         }
         is ValueNode -> {
-            println(indent + node.value)
+            println(indent + node.value.value)
         }
         is VariableNode -> {
             println(indent + node.variable.name)
